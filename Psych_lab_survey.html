@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cognitive Rhythm Study | Dartmouth</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg: #0a0e1a;
+    --panel: #131825;
+    --panel-light: #1a2030;
+    --accent: #00d9a3;
+    --accent-dim: #00a37a;
+    --text: #e8ecf4;
+    --text-dim: #8b95a7;
+    --border: #232938;
+    --error: #ff5c7a;
+    --warn: #ffb84d;
+  }
+  
+  body {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+    background-image: 
+      radial-gradient(circle at 20% 10%, rgba(0, 217, 163, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(100, 150, 255, 0.06) 0%, transparent 40%);
+  }
+  
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  
+  h1 span { color: var(--accent); font-weight: 500; }
+  
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 32px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  
+  .panel.active { display: block; animation: fadeIn 0.4s ease; }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .panel-title {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .step-counter {
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  
+  p { color: var(--text-dim); margin-bottom: 16px; font-size: 14px; }
+  p strong { color: var(--text); }
+  
+  .field { margin-bottom: 20px; }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--text);
+    letter-spacing: 0.3px;
+  }
+  
+  label .hint {
+    color: var(--text-dim);
+    font-weight: normal;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  
+  .radio-group, .check-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 14px;
+  }
+  
+  .radio-option:hover { border-color: var(--accent-dim); }
+  .radio-option input { width: auto; margin-right: 12px; accent-color: var(--accent); }
+  .radio-option.selected { border-color: var(--accent); background: rgba(0, 217, 163, 0.05); }
+  
+  button {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+  }
+  
+  button:hover:not(:disabled) { background: var(--accent-dim); transform: translateY(-1px); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  
+  button.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  
+  button.secondary:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0, 217, 163, 0.05);
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+  
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  
+  .task-stage {
+    text-align: center;
+    padding: 40px 20px;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .big-display {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 64px;
+    font-weight: 200;
+    margin: 24px 0;
+    letter-spacing: -2px;
+  }
+  
+  .instruction {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 16px;
+    max-width: 500px;
+  }
+  
+  .sub-instruction {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 500px;
+  }
+  
+  .reaction-box {
+    width: 100%;
+    max-width: 500px;
+    height: 280px;
+    border-radius: 8px;
+    background: var(--panel-light);
+    border: 2px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.05s;
+  }
+  
+  .reaction-box.waiting {
+    background: #2a1f1a;
+    border-color: var(--warn);
+    color: var(--warn);
+  }
+  
+  .reaction-box.go {
+    background: #00d9a3;
+    border-color: #00d9a3;
+    color: #0a0e1a;
+    font-weight: 600;
+  }
+  
+  .reaction-box.too-soon {
+    background: #2a1a20;
+    border-color: var(--error);
+    color: var(--error);
+  }
+  
+  .trial-tracker {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    justify-content: center;
+  }
+  
+  .trial-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  
+  .trial-dot.complete { background: var(--accent); }
+  .trial-dot.current { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+  
+  .stroop-word {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    margin: 32px 0;
+    letter-spacing: 2px;
+  }
+  
+  .stroop-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  
+  .stroop-btn {
+    padding: 18px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .stroop-btn:hover { border-color: var(--accent); background: rgba(0,217,163,0.05); }
+  
+  .score-card {
+    background: linear-gradient(135deg, rgba(0,217,163,0.1), rgba(100,150,255,0.05));
+    border: 1px solid var(--accent-dim);
+    border-radius: 6px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .score-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  
+  .score-value {
+    font-family: -apple-system, BlinkMacSystemFont
+  .score-value {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 64px;
+    font-weight: 200;
+    color: var(--accent);
+  }
+  
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .score-item {
+    background: var(--panel-light);
+    padding: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  
+  .score-item-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  
+  .score-item-value {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--text);
+  }
+  
+  .status-msg {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+  }
+  
+  .status-msg.success { background: rgba(0,217,163,0.1); color: var(--accent); border: 1px solid var(--accent-dim); }
+  .status-msg.error { background: rgba(255,92,122,0.1); color: var(--error); border: 1px solid var(--error); }
+  
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  
+  @media (max-width: 600px) {
+    h1 { font-size: 24px; }
+    .panel { padding: 20px; }
+    .big-display { font-size: 48px; }
+    .stroop-word { font-size: 56px; }
+    .score-value { font-size: 48px; }
+    .score-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .score-item-value { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">PSYC Research · Dartmouth College</div>
+    <h1>Cognitive <span>Rhythm</span> Study</h1>
+    <div class="subtitle">Mapping the weekly cognitive cycle of college students</div>
+  </header>
+
+  <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+  <div class="panel active" id="panel-intro">
+    <div class="panel-header">
+      <div class="panel-title">Welcome &amp; Consent</div>
+      <div class="step-counter">STEP 01 / 06</div>
+    </div>
+    <p>This study investigates whether Dartmouth students exhibit a predictable <strong>weekly cognitive rhythm</strong>, and how social behavior (going out) influences cognitive readiness across the week.</p>
+    <p>You will complete <strong>three short cognitive tasks</strong> after answering a few quick questions. The full session takes about <strong>5–7 minutes</strong>.</p>
+    <p>Tasks include:</p>
+    <p>① Mental counting (25-second internal timer) &nbsp;·&nbsp; ② Reaction time (5 trials, averaged) &nbsp;·&nbsp; ③ Stroop task (executive function)</p>
+    <p>All data is anonymous. By continuing, you consent to participate.</p>
+    <div class="button-row">
+      <button onclick="goTo('demographics')">Begin →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-demographics">
+    <div class="panel-header">
+      <div class="panel-title">Background &amp; Controls</div>
+      <div class="step-counter">STEP 02 / 06</div>
+    </div>
+    <p>These questions control for known confounds in cognitive performance research.</p>
+    
+    <div class="field">
+      <label>Hours of sleep last night <span class="hint">(0–14)</span></label>
+      <input type="number" id="f-sleep" min="0" max="14" step="0.5" placeholder="e.g. 7.5">
+    </div>
+    
+    <div class="field">
+      <label>Caffeine consumed today <span class="hint">(mg, approximate)</span></label>
+      <select id="f-caffeine">
+        <option value="">Select...</option>
+        <option value="0">None</option>
+        <option value="50">Light (~50mg / small tea)</option>
+        <option value="100">Moderate (~100mg / 1 coffee)</option>
+        <option value="200">High (~200mg / 2 coffees)</option>
+        <option value="300">Very high (300mg+)</option>
+      </select>
+    </div>
+    
+    <div class="field">
+      <label>Current time of day</label>
+      <select id="f-time">
+        <option value="">Select...</option>
+        <option value="morning">Morning (6am–11am)</option>
+        <option value="midday">Midday (11am–2pm)</option>
+        <option value="afternoon">Afternoon (2pm–5pm)</option>
+        <option value="evening">Evening (5pm–9pm)</option>
+        <option value="night">Night (9pm+)</option>
+      </select>
+    </div>
+    
+    <div class="field">
+      <label>Current day of week</label>
+      <select id="f-day">
+        <option value="">Select...</option>
+        <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+        <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+      </select>
+    </div>
+    
+    <div class="field">
+      <label>ADHD diagnosis or self-report?</label>
+      <select id="f-adhd">
+        <option value="">Select...</option>
+        <option value="no">No</option>
+        <option value="self">Self-report only</option>
+        <option value="diagnosed">Formally diagnosed</option>
+      </select>
+    </div>
+    
+    <div class="field">
+      <label>Have you done similar cognitive tasks before?</label>
+      <select id="f-experience">
+        <option value="">Select...</option>
+        <option value="never">Never</option>
+        <option value="once">Once or twice</option>
+        <option value="regular">Regularly</option>
+      </select>
+    </div>
+    
+    <div class="button-row">
+      <button class="secondary" onclick="goTo('intro')">← Back</button>
+      <button onclick="validateDemographics()">Continue →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-wentout">
+    <div class="panel-header">
+      <div class="panel-title">Social Behavior</div>
+      <div class="step-counter">STEP 03 / 06</div>
+    </div>
+    <p>When was the last time you went out (parties, bars, drinking, late social event)?</p>
+    
+    <div class="radio-group" id="wentout-group">
+      <label class="radio-option"><input type="radio" name="wentout" value="night-before"> Last night</label>
+      <label class="radio-option"><input type="radio" name="wentout" value="two-nights"> Two nights ago</label>
+      <label class="radio-option"><input type="radio" name="wentout" value="week"> Within the past week</label>
+      <label class="radio-option"><input type="radio" name="wentout" value="month"> Within the past month</label>
+      <label class="radio-option"><input type="radio" name="wentout" value="over-month"> Over a month ago</label>
+      <label class="radio-option"><input type="radio" name="wentout" value="never"> Never / I don't go out</label>
+    </div>
+    
+    <div class="field" style="margin-top:24px">
+      <label>Drinks consumed during that outing <span class="hint">(0 if none)</span></label>
+      <input type="number" id="f-drinks" min="0" max="30" placeholder="e.g. 3">
+    </div>
+    
+    <div class="button-row">
+      <button class="secondary" onclick="goTo('demographics')">← Back</button>
+      <button onclick="validateWentOut()">Continue →</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-count">
+    <div class="panel-header">
+      <div class="panel-title">Task 1 · Internal Timing</div>
+      <div class="step-counter">STEP 04 / 06</div>
+    </div>
+    <div class="task-stage" id="count-stage">
+      <div id="count-instructions">
+        <div class="instruction">Count to <strong>25 seconds</strong> in your head.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">When you press <strong>START</strong>, silently count "one Mississippi, two Mississippi..." until you reach 25, then press <strong>STOP</strong>. Do not look at any clocks.</div>
+        <button onclick="startCount()">Start Counting</button>
+      </div>
+      
+      <div id="count-running" style="display:none">
+        <div class="instruction">Counting in progress...</div>
+        <div class="big-display">⏱</div>
+        <div class="sub-instruction" style="margin-bottom:24px">Press STOP when you reach 25 seconds in your head.</div>
+        <button onclick="stopCount()">Stop</button>
+      </div>
+      
+      <div id="count-result" style="display:none">
+        <div class="instruction">Time recorded</div>
+        <div class="big-display" id="count-time">--</div>
+        <div class="sub-instruction" id="count-feedback"></div>
+        <div class="button-row" style="justify-content:center; margin-top:24px">
+          <button onclick="goTo('reaction')">Continue to Task 2 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-reaction">
+    <div class="panel-header">
+      <div class="panel-title">Task 2 · Reaction Time</div>
+      <div class="step-counter">STEP 05 / 06</div>
+    </div>
+    <div class="task-stage">
+      <div id="rt-intro">
+        <div class="instruction">When the box turns <span style="color:var(--accent)"><strong>GREEN</strong></span>, click as fast as you can.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">5 trials. Don't click while it's red — that's a false start. Your average reaction time will be calculated.</div>
+        <button onclick="startRT()">Begin Trials</button>
+      </div>
+      
+      <div id="rt-active" style="display:none; width:100%">
+        <div class="trial-tracker" id="rt-tracker"></div>
+        <div class="reaction-box" id="rt-box" onclick="rtClick()">Click to start trial</div>
+        <div class="sub-instruction" id="rt-status" style="margin-top:16px"></div>
+      </div>
+      
+      <div id="rt-done" style="display:none">
+        <div class="instruction">Reaction trials complete</div>
+        <div class="big-display" id="rt-avg">--</div>
+        <div class="sub-instruction" id="rt-detail"></div>
+        <div class="button-row" style="justify-content:center; margin-top:24px">
+          <button onclick="goTo('stroop')">Continue to Task 3 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-stroop">
+    <div class="panel-header">
+      <div class="panel-title">Task 3 · Stroop Test</div>
+      <div class="step-counter">STEP 06 / 06</div>
+    </div>
+    <div class="task-stage">
+      <div id="stroop-intro">
+        <div class="instruction">Identify the <strong>color of the ink</strong>, NOT the word.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">15 trials. Click the button matching the displayed color. Be both fast and accurate.</div>
+        <button onclick="startStroop()">Begin Stroop Task</button>
+      </div>
+      
+      <div id="stroop-active" style="display:none">
+        <div class="sub-instruction" id="stroop-progress">Trial 1 / 15</div>
+        <div class="stroop-word" id="stroop-word">READY</div>
+        <div class="stroop-buttons">
+          <button class="stroop-btn" onclick="stroopAnswer('red')">Red</button>
+          <button class="stroop-btn" onclick="stroopAnswer('green')">Green</button>
+          <button class="stroop-btn" onclick="stroopAnswer('blue')">Blue</button>
+          <button class="stroop-btn" onclick="stroopAnswer('yellow')">Yellow</button>
+        </div>
+      </div>
+      
+      <div id="stroop-done" style="display:none">
+        <div class="instruction">Stroop task complete</div>
+        <div class="big-display" id="stroop-score">--</div>
+        <div class="sub-instruction" id="stroop-detail"></div>
+        <div class="button-row" style="justify-content:center; margin-top:24px">
+          <button onclick="finishExperiment()">View Results →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-results">
+    <div class="panel-header">
+      <div class="panel-title">Your Cognitive Readiness</div>
+      <div class="step-counter">COMPLETE</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="score-label">Composite Score</div>
+      <div class="score-value" id="composite-score">--</div>
+      <div class="sub-instruction" id="composite-msg"></div>
+    </div>
+    
+    <div class="score-grid">
+      <div class="score-item">
+        <div class="score-item-label">Internal Timing</div>
+        <div class="score-item-value" id="r-count">--</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-label">Reaction (avg)</div>
+        <div class="score-item-value" id="r-rt">--</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-label">Stroop</div>
+        <div class="score-item-value" id="r-stroop">--</div>
+      </div>
+    </div>
+    
+    <div id="upload-status"></div>
+    
+    <div class="button-row" style="justify-content:center; margin-top:24px">
+      <button class="secondary" onclick="downloadJSON()">Download Data (JSON)</button>
+      <button onclick="uploadToSheet()">Submit to Study</button>
+    </div>
+    
+    <p style="text-align:center; margin-top:24px; font-size:12px;">Thank you for participating in Dartmouth's Cognitive Rhythm Study.</p>
+  </div>
+
+  <footer>
+    Dartmouth College · PSYC Research · Single-session protocol
+  </footer>
+</div>
+
+<script>
+// ============ GOOGLE SHEETS WEBHOOK ============
+const SHEETS_WEBHOOK = "https://script.google.com/macros/s/AKfycbyHUBlH8USqlZ1OfVITQa6dSxW1hRkgaP3cwAI7Gwqg9HmL-8Ih0sQRQ3NlEFPc_EpM/exec";
+
+// ============ STATE ============
+const data = {
+  sleep: null, caffeine: null, time: null, day: null,
+  adhd: null, experience: null, wentOut: null, drinks: null,
+  countTime: null, reactionAvg: null, reactionTrials: [],
+  stroopAccuracy: null, stroopAvgRT: null, stroopScore: null,
+  composite: null, timestamp: null
+};
+
+const panels = ['intro','demographics','wentout','count','reaction','stroop','results'];
+let current = 'intro';
+
+function goTo(panel) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + panel).classList.add('active');
+  current = panel;
+  const idx = panels.indexOf(panel);
+  document.getElementById('progressBar').style.width = ((idx / (panels.length - 1)) * 100) + '%';
+  window.scrollTo({top: 0, behavior:'smooth'});
+}
+
+document.querySelectorAll('.radio-option input').forEach(r => {
+  r.addEventListener('change', function() {
+    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+    this.closest('.radio-option').classList.add('selected');
+  });
+});
+
+function validateDemographics() {
+  const fields = ['f-sleep','f-caffeine','f-time','f-day','f-adhd','f-experience'];
+  for (const f of fields) {
+    if (!document.getElementById(f).value) {
+      alert('Please complete all fields.');
+      return;
+    }
+  }
+  data.sleep = parseFloat(document.getElementById('f-sleep').value);
+  data.caffeine = parseInt(document.getElementById('f-caffeine').value);
+  data.time = document.getElementById('f-time').value;
+  data.day = document.getElementById('f-day').value;
+  data.adhd = document.getElementById('f-adhd').value;
+  data.experience = document.getElementById('f-experience').value;
+  goTo('wentout');
+}
+
+function validateWentOut() {
+  const sel = document.querySelector('input[name="wentout"]:checked');
+  if (!sel) { alert('Please select an option.'); return; }
+  data.wentOut = sel.value;
+  data.drinks = parseInt(document.getElementById('f-drinks').value) || 0;
+  goTo('count');
+}
+
+// ============ TASK 1: COUNT TO 25 ============
+let countStart = 0;
+function startCount() {
+  document.getElementById('count-instructions').style.display = 'none';
+  document.getElementById('count-running').style.display = 'block';
+  countStart = performance.now();
+}
+
+function stopCount() {
+  const elapsed = (performance.now() - countStart) / 1000;
+  data.countTime = elapsed;
+  document.getElementById('count-running').style.display = 'none';
+  document.getElementById('count-result').style.display = 'block';
+  document.getElementById('count-time').textContent = elapsed.toFixed(2) + 's';
+  const diff = Math.abs(elapsed - 25);
+  let fb = '';
+  if (diff < 1.5) fb = 'Excellent internal timing.';
+  else if (diff < 4) fb = 'Solid internal timing.';
+  else if (diff < 7) fb = 'Moderate timing accuracy.';
+  else fb = 'Significant deviation from 25 seconds.';
+  document.getElementById('count-feedback').textContent = `Target: 25.00s · Difference: ${diff.toFixed(2)}s · ${fb}`;
+}
+
+// ============ TASK 2: REACTION TIME ============
+let rtTrials = [];
+let rtState = 'idle';
+let rtStart = 0;
+let rtTimeout = null;
+const RT_TOTAL = 5;
+
+function renderTracker() {
+  const t = document.getElementById('rt-tracker');
+  t.innerHTML = '';
+  for (let i = 0; i < RT_TOTAL; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'trial-dot';
+    if (i < rtTrials.length) dot.classList.add('complete');
+    else if (i === rtTrials.length) dot.classList.add('current');
+    t.appendChild(dot);
+  }
+}
+
+function startRT() {
+  document.getElementById('rt-intro').style.display = 'none';
+  document.getElementById('rt-active').style.display = 'block';
+  rtTrials = [];
+  rtState = 'idle';
+  renderTracker();
+  prepareRTTrial();
+}
+
+function prepareRTTrial() {
+  const box = document.getElementById('rt-box');
+  box.className = 'reaction-box';
+  box.textContent = `Click to begin trial ${rtTrials.length + 1}`;
+  document.getElementById('rt-status').textContent = '';
+  rtState = 'idle';
+}
+
+function rtClick() {
+  const box = document.getElementById('rt-box');
+  if (rtState === 'idle') {
+    rtState = 'waiting';
+    box.className = 'reaction-box waiting';
+    box.textContent = 'Wait for GREEN...';
+    const delay = 1500 + Math.random() * 2500;
+    rtTimeout = setTimeout(() => {
+      box.className = 'reaction-box go';
+      box.textContent = 'CLICK NOW!';
+      rtStart = performance.now();
+      rtState = 'go';
+    }, delay);
+  } else if (rtState === 'waiting') {
+    clearTimeout(rtTimeout);
+    box.className = 'reaction-box too-soon';
+    box.textContent = 'Too soon — wait for green';
+    document.getElementById('rt-status').textContent = 'False start. Trial will be retried.';
+    rtState = 'idle';
+    setTimeout(prepareRTTrial, 1500);
+  } else if (rtState === 'go') {
+    const reaction = performance.now() - rtStart;
+    rtTrials.push(reaction);
+    document.getElementById('rt-status').textContent = `Trial ${rtTrials.length}: ${reaction.toFixed(0)}ms`;
+    renderTracker();
+    if (rtTrials.length >= RT_TOTAL) {
+      finishRT();
+    } else {
+      setTimeout(prepareRTTrial, 1000);
+    }
+  }
+}
+
+function finishRT() {
+  const avg = rtTrials.reduce((a,b) => a+b, 0) / rtTrials.length;
+  data.reactionAvg = avg;
+  data.reactionTrials = rtTrials;
+  document.getElementById('rt-active').style.display = 'none';
+  document.getElementById('rt-done').style.display = 'block';
+  document.getElementById('rt-avg').textContent = avg.toFixed(0) + 'ms';
+  const min = Math.min(...rtTrials).toFixed(0);
+  const max = Math.max(...rtTrials).toFixed(0);
+  document.getElementById('rt-detail').textContent = `Average of ${RT_TOTAL} trials · Best: ${min}ms · Worst: ${max}ms`;
+}
+
+// ============ TASK 3: STROOP ============
+const STROOP_TOTAL = 15;
+const COLORS = ['red','green','blue','yellow'];
+const COLOR_HEX = { red: '#ff5c7a', green: '#00d9a3', blue: '#5c9eff', yellow: '#ffcf4d' };
+let stroopTrials = [];
+let stroopIdx = 0;
+let stroopWord = '', stroopColor = '', stroopStart = 0;
+
+function startStroop() {
+  document.getElementById('stroop-intro').style.display = 'none';
+  document.getElementById('stroop-active').style.display = 'block';
+  stroopTrials = [];
+  stroopIdx = 0;
+  nextStroop();
+}
+
+function nextStroop() {
+  if (stroopIdx >= STROOP_TOTAL) { finishStroop(); return; }
+  document.getElementById('stroop-progress').textContent = `Trial ${stroopIdx + 1} / ${STROOP_TOTAL}`;
+  const incongruent = Math.random() < 0.7;
+  stroopColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+  if (incongruent) {
+    let w;
+    do { w = COLORS[Math.floor(Math.random() * COLORS.length)]; } while (w === stroopColor);
+    stroopWord = w;
+  } else {
+    stroopWord = stroopColor;
+  }
+  const el = document.getElementById('stroop-word');
+  el.textContent = stroopWord.toUpperCase();
+  el.style.color = COLOR_HEX[stroopColor];
+  stroopStart = performance.now();
+}
+
+function stroopAnswer(answer) {
+  const rt = performance.now() - stroopStart;
+  const correct = (answer === stroopColor);
+  stroopTrials.push({ correct, rt, congruent: stroopWord === stroopColor });
+  stroopIdx++;
+  nextStroop();
+}
+
+function finishStroop() {
+  const correct = stroopTrials.filter(t => t.correct).length;
+  const accuracy = correct / STROOP_TOTAL;
+  const correctTrials = stroopTrials.filter(t => t.correct);
+  const avgRT = correctTrials.length > 0
+    ? correctTrials.reduce((a,b) => a + b.rt, 0) / correctTrials.length
+    : 0;
+  const score = accuracy * (1500 / Math.max(avgRT, 300)) * 100;
+  data.stroopAccuracy = accuracy;
+  data.stroopAvgRT = avgRT;
+  data.stroopScore = score;
+  document.getElementById('stroop-active').style.display = 'none';
+  document.getElementById('stroop-done').style.display = 'block';
+  document.getElementById('stroop-score').textContent = score.toFixed(0);
+  document.getElementById('stroop-detail').textContent = 
+    `Accuracy: ${(accuracy*100).toFixed(0)}% · Avg RT: ${avgRT.toFixed(0)}ms`;
+}
+
+// ============ COMPOSITE & RESULTS ============
+function finishExperiment() {
+  const timingDiff = Math.abs(data.countTime - 25);
+  const timingScore = Math.max(0, 100 - (timingDiff * 8));
+  const rtScore = Math.max(0, Math.min(100, 100 - ((data.reactionAvg - 200) / 4)));
+  const stroopNorm = Math.max(0, Math.min(100, data.stroopScore));
+  const composite = (timingScore * 0.25) + (rtScore * 0.35) + (stroopNorm * 0.40);
+  data.composite = composite;
+  data.timestamp = new Date().toISOString();
+  
+  document.getElementById('composite-score').textContent = composite.toFixed(1);
+  document.getElementById('r-count').textContent = data.countTime.toFixed(2) + 's';
+  document.getElementById('r-rt').textContent = data.reactionAvg.toFixed(0) + 'ms';
+  document.getElementById('r-stroop').textContent = data.stroopScore.toFixed(0);
+  
+  let msg = '';
+  if (composite >= 80) msg = 'Peak cognitive readiness';
+  else if (composite >= 65) msg = 'Above-average performance';
+  else if (composite >= 50) msg = 'Average cognitive readiness';
+  else if (composite >= 35) msg = 'Below-average — possible fatigue';
+  else msg = 'Low cognitive readiness — consider rest';
+  document.getElementById('composite-msg').textContent = msg;
+  
+  goTo('results');
+}
+
+function downloadJSON() {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `cognitive_rhythm_${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function uploadToSheet() {
+  const status = document.getElementById('upload-status');
+  status.innerHTML = '<div class="status-msg">Uploading...</div>';
+  try {
+    await fetch(SHEETS_WEBHOOK, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    });
+    status.innerHTML = '<div class="status-msg success">✓ Submitted successfully. Thank you!</div>';
+  } catch (e) {
+    status.innerHTML = '<div class="status-msg error">Upload failed: ' + e.message + '</div>';
+  }
+}
+</script>
+</body>
+</html>
