@@ -1,1 +1,1 @@
-# Psych_lab_survery
+# Psych_lab_survey
