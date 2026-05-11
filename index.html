@@ -6,27 +6,12 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0a0e1a;
-    --panel: #131825;
-    --panel-light: #1a2030;
-    --accent: #00d9a3;
-    --accent-dim: #00a37a;
-    --text: #e8ecf4;
-    --text-dim: #8b95a7;
-    --border: #232938;
-    --error: #ff5c7a;
-    --warn: #ffb84d;
+    --bg: #0a0e1a; --panel: #131825; --panel-light: #1a2030;
+    --accent: #00d9a3; --accent-dim: #00a37a; --text: #e8ecf4;
+    --text-dim: #8b95a7; --border: #232938; --error: #ff5c7a; --warn: #ffb84d;
   }
-  body {
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.6;
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(0, 217, 163, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 80% 80%, rgba(100, 150, 255, 0.06) 0%, transparent 40%);
-  }
+  body { font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6;
+    background-image: radial-gradient(circle at 20% 10%, rgba(0, 217, 163, 0.08) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(100, 150, 255, 0.06) 0%, transparent 40%); }
   .container { max-width: 780px; margin: 0 auto; padding: 40px 24px; }
   header { text-align: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
   .badge { display: inline-block; font-size: 11px; letter-spacing: 2px; color: var(--accent); border: 1px solid var(--accent-dim); padding: 4px 12px; border-radius: 2px; margin-bottom: 16px; text-transform: uppercase; }
@@ -44,117 +29,58 @@
   .field { margin-bottom: 20px; }
   label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--text); letter-spacing: 0.3px; }
   label .hint { color: var(--text-dim); font-weight: normal; font-size: 12px; margin-left: 8px; }
-  input, select, textarea { width: 100%; padding: 12px 14px; background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: inherit; font-size: 14px; transition: border-color 0.2s; }
+  input, select { width: 100%; padding: 12px 14px; background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: inherit; font-size: 14px; transition: border-color 0.2s; }
   input:focus, select:focus { outline: none; border-color: var(--accent); }
-  .radio-group, .check-group { display: flex; flex-direction: column; gap: 8px; }
-  .radio-option { display: flex; align-items: center; padding: 10px 14px; background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.15s; font-size: 14px; }
+  .radio-group { display: flex; flex-direction: column; gap: 8px; }
+  .radio-option { display: flex; align-items: center; padding: 10px 14px; background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 14px; }
   .radio-option:hover { border-color: var(--accent-dim); }
   .radio-option input { width: auto; margin-right: 12px; accent-color: var(--accent); }
   .radio-option.selected { border-color: var(--accent); background: rgba(0, 217, 163, 0.05); }
-  button { background: var(--accent); color: var(--bg); border: none; padding: 14px 28px; border-radius: 4px; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: all 0.15s; text-transform: uppercase; }
-  button:hover:not(:disabled) { background: var(--accent-dim); transform: translateY(-1px); }
+  button { background: var(--accent); color: var(--bg); border: none; padding: 14px 28px; border-radius: 4px; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; text-transform: uppercase; }
+  button:hover:not(:disabled) { background: var(--accent-dim); }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
   button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
-  button.secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: rgba(0, 217, 163, 0.05); }
+  button.secondary:hover { border-color: var(--accent); color: var(--accent); }
   .button-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
   .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 24px; }
   .progress-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; width: 0%; }
   .task-stage { text-align: center; padding: 40px 20px; min-height: 380px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-  .big-display { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 64px; font-weight: 200; margin: 24px 0; letter-spacing: -2px; }
+  .big-display { font-size: 64px; font-weight: 200; margin: 24px 0; letter-spacing: -2px; font-family: -apple-system, sans-serif; }
   .instruction { font-size: 18px; color: var(--text); margin-bottom: 16px; max-width: 500px; }
   .sub-instruction { color: var(--text-dim); font-size: 14px; max-width: 500px; }
-  .reaction-box { width: 100%; max-width: 500px; height: 280px; border-radius: 8px; background: var(--panel-light); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-dim); cursor: pointer; user-select: none; transition: background 0.05s; }
+  .reaction-box { width: 100%; max-width: 500px; height: 280px; border-radius: 8px; background: var(--panel-light); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-dim); cursor: pointer; user-select: none; }
   .reaction-box.waiting { background: #2a1f1a; border-color: var(--warn); color: var(--warn); }
   .reaction-box.go { background: #00d9a3; border-color: #00d9a3; color: #0a0e1a; font-weight: 600; }
   .reaction-box.too-soon { background: #2a1a20; border-color: var(--error); color: var(--error); }
   .trial-tracker { display: flex; gap: 8px; margin: 16px 0; justify-content: center; }
   .trial-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
   .trial-dot.complete { background: var(--accent); }
-  .trial-dot.current { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
-  .stroop-word { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 72px; font-weight: 700; margin: 32px 0; letter-spacing: 2px; }
+  .trial-dot.current { background: var(--warn); }
+  .stroop-word { font-size: 72px; font-weight: 700; margin: 32px 0; letter-spacing: 2px; font-family: -apple-system, sans-serif; }
   .stroop-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 360px; margin: 0 auto; }
-  .stroop-btn { padding: 18px; background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; text-transform: uppercase; letter-spacing: 1px; }
-  .stroop-btn:hover { border-color: var(--accent); background: rgba(0,217,163,0.05); }
+  .stroop-btn { padding: 18px; background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; text-transform: uppercase; }
+  .stroop-btn:hover { border-color: var(--accent); }
   .score-card { background: linear-gradient(135deg, rgba(0,217,163,0.1), rgba(100,150,255,0.05)); border: 1px solid var(--accent-dim); border-radius: 6px; padding: 32px; text-align: center; margin-bottom: 24px; }
   .score-label { font-size: 12px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px; }
-  .score-value { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 64px; font-weight: 200; color: var(--accent); }
+  .score-value { font-size: 64px; font-weight: 200; color: var(--accent); font-family: -apple-system, sans-serif; }
   .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
   .score-item { background: var(--panel-light); padding: 16px; border-radius: 4px; border: 1px solid var(--border); }
   .score-item-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .score-item-value { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 22px; font-weight: 300; color: var(--text); }
+  .score-item-value { font-size: 22px; font-weight: 300; color: var(--text); font-family: -apple-system, sans-serif; }
   .status-msg { margin-top: 16px; padding: 12px; border-radius: 4px; font-size: 13px; text-align: center; }
   .status-msg.success { background: rgba(0,217,163,0.1); color: var(--accent); border: 1px solid var(--accent-dim); }
   .status-msg.error { background: rgba(255,92,122,0.1); color: var(--error); border: 1px solid var(--error); }
-  
-  /* MEMORY TASK STYLES */
-  .word-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    max-width: 500px;
-    margin: 24px auto;
-  }
-  .word-display {
-    background: var(--panel-light);
-    border: 1px solid var(--accent-dim);
-    border-radius: 4px;
-    padding: 16px;
-    font-size: 18px;
-    text-align: center;
-    color: var(--text);
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .memory-timer {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 48px;
-    font-weight: 200;
-    color: var(--accent);
-    margin: 16px 0;
-  }
-  .word-choice-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    max-width: 560px;
-    margin: 24px auto;
-  }
-  .word-choice {
-    background: var(--panel-light);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 14px;
-    font-size: 14px;
-    text-align: center;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.15s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    user-select: none;
-  }
+  .word-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 500px; margin: 24px auto; }
+  .word-display { background: var(--panel-light); border: 1px solid var(--accent-dim); border-radius: 4px; padding: 16px; font-size: 18px; text-align: center; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+  .memory-timer { font-size: 48px; font-weight: 200; color: var(--accent); margin: 16px 0; font-family: -apple-system, sans-serif; }
+  .word-choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-width: 560px; margin: 24px auto; }
+  .word-choice { background: var(--panel-light); border: 1px solid var(--border); border-radius: 4px; padding: 14px; font-size: 14px; text-align: center; cursor: pointer; text-transform: uppercase; user-select: none; }
   .word-choice:hover { border-color: var(--accent-dim); }
   .word-choice.selected { background: rgba(0,217,163,0.15); border-color: var(--accent); color: var(--accent); font-weight: 600; }
-  .selection-counter {
-    font-size: 14px;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-  }
+  .selection-counter { font-size: 14px; color: var(--text-dim); margin-bottom: 8px; }
   .selection-counter strong { color: var(--accent); }
-  
   footer { text-align: center; margin-top: 40px; color: var(--text-dim); font-size: 12px; }
-  @media (max-width: 600px) {
-    h1 { font-size: 24px; }
-    .panel { padding: 20px; }
-    .big-display { font-size: 48px; }
-    .stroop-word { font-size: 56px; }
-    .score-value { font-size: 48px; }
-    .score-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .score-item-value { font-size: 18px; }
-    .word-grid { grid-template-columns: repeat(2, 1fr); }
-    .word-choice-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+  @media (max-width: 600px) { h1 { font-size: 24px; } .panel { padding: 20px; } .big-display { font-size: 48px; } .stroop-word { font-size: 56px; } .score-value { font-size: 48px; } .score-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
 </head>
 <body>
@@ -166,142 +92,61 @@
   </header>
   <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
 
-  <!-- INTRO -->
   <div class="panel active" id="panel-intro">
-    <div class="panel-header">
-      <div class="panel-title">Welcome &amp; Consent</div>
-      <div class="step-counter">STEP 01 / 08</div>
-    </div>
-    <p>This study investigates whether Dartmouth students exhibit a predictable <strong>weekly cognitive rhythm</strong>, and how social behavior (going out) influences cognitive readiness across the week.</p>
-    <p>You will complete <strong>four short cognitive tasks</strong> after answering a few quick questions. The full session takes about <strong>2–3 minutes</strong>.</p>
-    <p>Tasks include:</p>
-    <p>① Word memorization (10 words, 20s study) &nbsp;·&nbsp; ② Mental counting (25-second internal timer) &nbsp;·&nbsp; ③ Reaction time (5 trials, averaged) &nbsp;·&nbsp; ④ Stroop task (executive function) &nbsp;·&nbsp; ⑤ Word recall</p>
-    <p>All data is anonymous. By continuing, you consent to participate.</p>
-    <div class="button-row">
-      <button onclick="goTo('demographics')">Begin →</button>
-    </div>
+    <div class="panel-header"><div class="panel-title">Welcome &amp; Consent</div><div class="step-counter">STEP 01 / 08</div></div>
+    <p>This study investigates whether Dartmouth students exhibit a predictable <strong>weekly cognitive rhythm</strong>.</p>
+    <p>The full session takes about <strong>2–3 minutes</strong>. All data is anonymous. By continuing, you consent to participate.</p>
+    <div class="button-row"><button onclick="goTo('demographics')">Begin →</button></div>
   </div>
 
-  <!-- DEMOGRAPHICS -->
   <div class="panel" id="panel-demographics">
-    <div class="panel-header">
-      <div class="panel-title">Background &amp; Controls</div>
-      <div class="step-counter">STEP 02 / 08</div>
+    <div class="panel-header"><div class="panel-title">Background &amp; Controls</div><div class="step-counter">STEP 02 / 08</div></div>
+    <div class="field"><label>Hours of sleep last night <span class="hint">(0–14)</span></label><input type="number" id="f-sleep" min="0" max="14" step="0.5" placeholder="e.g. 7.5"></div>
+    <div class="field"><label>Caffeine consumed today</label>
+      <select id="f-caffeine"><option value="">Select...</option><option value="0">None</option><option value="50">Light (~50mg)</option><option value="100">Moderate (~100mg)</option><option value="200">High (~200mg)</option><option value="300">Very high (300mg+)</option></select>
     </div>
-    <p>These questions control for known confounds in cognitive performance research.</p>
-    <div class="field">
-      <label>Hours of sleep last night <span class="hint">(0–14)</span></label>
-      <input type="number" id="f-sleep" min="0" max="14" step="0.5" placeholder="e.g. 7.5">
+    <div class="field"><label>Current time of day</label>
+      <select id="f-time"><option value="">Select...</option><option value="morning">Morning (6am–11am)</option><option value="midday">Midday (11am–2pm)</option><option value="afternoon">Afternoon (2pm–5pm)</option><option value="evening">Evening (5pm–9pm)</option><option value="night">Night (9pm+)</option></select>
     </div>
-    <div class="field">
-      <label>Caffeine consumed today <span class="hint">(mg, approximate)</span></label>
-      <select id="f-caffeine">
-        <option value="">Select...</option>
-        <option value="0">None</option>
-        <option value="50">Light (~50mg / small tea)</option>
-        <option value="100">Moderate (~100mg / 1 coffee)</option>
-        <option value="200">High (~200mg / 2 coffees)</option>
-        <option value="300">Very high (300mg+)</option>
-      </select>
+    <div class="field"><label>Current day of week</label>
+      <select id="f-day"><option value="">Select...</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
     </div>
-    <div class="field">
-      <label>Current time of day</label>
-      <select id="f-time">
-        <option value="">Select...</option>
-        <option value="morning">Morning (6am–11am)</option>
-        <option value="midday">Midday (11am–2pm)</option>
-        <option value="afternoon">Afternoon (2pm–5pm)</option>
-        <option value="evening">Evening (5pm–9pm)</option>
-        <option value="night">Night (9pm+)</option>
-      </select>
+    <div class="field"><label>ADHD diagnosis or self-report?</label>
+      <select id="f-adhd"><option value="">Select...</option><option value="no">No</option><option value="self">Self-report only</option><option value="diagnosed">Formally diagnosed</option></select>
     </div>
-    <div class="field">
-      <label>Current day of week</label>
-      <select id="f-day">
-        <option value="">Select...</option>
-        <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
-        <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
-      </select>
+    <div class="field"><label>Done similar cognitive tasks before?</label>
+      <select id="f-experience"><option value="">Select...</option><option value="never">Never</option><option value="once">Once or twice</option><option value="regular">Regularly</option></select>
     </div>
-    <div class="field">
-      <label>ADHD diagnosis or self-report?</label>
-      <select id="f-adhd">
-        <option value="">Select...</option>
-        <option value="no">No</option>
-        <option value="self">Self-report only</option>
-        <option value="diagnosed">Formally diagnosed</option>
-      </select>
+    <div class="field"><label>Are you a varsity athlete at Dartmouth?</label>
+      <select id="f-athlete"><option value="">Select...</option><option value="no">No</option><option value="yes">Yes — varsity athlete</option><option value="club">Club / intramural sport</option></select>
     </div>
-    <div class="field">
-      <label>Have you done similar cognitive tasks before?</label>
-      <select id="f-experience">
-        <option value="">Select...</option>
-        <option value="never">Never</option>
-        <option value="once">Once or twice</option>
-        <option value="regular">Regularly</option>
-      </select>
+    <div class="field"><label>How many people are around you right now?</label>
+      <select id="f-environment"><option value="">Select...</option><option value="alone">Alone (0 people)</option><option value="few">A few (1–3)</option><option value="some">Some (4–10)</option><option value="many">Many (10+)</option><option value="crowded">Crowded / loud</option></select>
     </div>
-    <div class="field">
-      <label>Are you a varsity athlete at Dartmouth?</label>
-      <select id="f-athlete">
-        <option value="">Select...</option>
-        <option value="no">No</option>
-        <option value="yes">Yes — varsity athlete</option>
-        <option value="club">Club / intramural sport</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>How many people are around you right now? <span class="hint">(your testing environment)</span></label>
-      <select id="f-environment">
-        <option value="">Select...</option>
-        <option value="alone">Alone (0 people)</option>
-        <option value="few">A few people (1–3)</option>
-        <option value="some">Some people (4–10)</option>
-        <option value="many">Many people (10+)</option>
-        <option value="crowded">Crowded / loud (dining hall, party, etc.)</option>
-      </select>
-    </div>
-    <div class="button-row">
-      <button class="secondary" onclick="goTo('intro')">← Back</button>
-      <button onclick="validateDemographics()">Continue →</button>
-    </div>
+    <div class="button-row"><button class="secondary" onclick="goTo('intro')">← Back</button><button onclick="validateDemographics()">Continue →</button></div>
   </div>
 
-  <!-- WENT OUT -->
   <div class="panel" id="panel-wentout">
-    <div class="panel-header">
-      <div class="panel-title">Social Behavior</div>
-      <div class="step-counter">STEP 03 / 08</div>
-    </div>
-    <p>When was the last time you went out (parties, bars, drinking, late social event)?</p>
-    <div class="radio-group" id="wentout-group">
+    <div class="panel-header"><div class="panel-title">Social Behavior</div><div class="step-counter">STEP 03 / 08</div></div>
+    <p>When was the last time you went out (parties, bars, drinking)?</p>
+    <div class="radio-group">
       <label class="radio-option"><input type="radio" name="wentout" value="night-before"> Last night</label>
       <label class="radio-option"><input type="radio" name="wentout" value="two-nights"> Two nights ago</label>
       <label class="radio-option"><input type="radio" name="wentout" value="week"> Within the past week</label>
       <label class="radio-option"><input type="radio" name="wentout" value="month"> Within the past month</label>
       <label class="radio-option"><input type="radio" name="wentout" value="over-month"> Over a month ago</label>
-      <label class="radio-option"><input type="radio" name="wentout" value="never"> Never / I don't go out</label>
+      <label class="radio-option"><input type="radio" name="wentout" value="never"> Never</label>
     </div>
-    <div class="field" style="margin-top:24px">
-      <label>Drinks consumed during that outing <span class="hint">(0 if none)</span></label>
-      <input type="number" id="f-drinks" min="0" max="30" placeholder="e.g. 3">
-    </div>
-    <div class="button-row">
-      <button class="secondary" onclick="goTo('demographics')">← Back</button>
-      <button onclick="validateWentOut()">Continue →</button>
-    </div>
+    <div class="field" style="margin-top:24px"><label>Drinks consumed during that outing</label><input type="number" id="f-drinks" min="0" max="30" placeholder="e.g. 3"></div>
+    <div class="button-row"><button class="secondary" onclick="goTo('demographics')">← Back</button><button onclick="validateWentOut()">Continue →</button></div>
   </div>
 
-  <!-- MEMORY: SHOW WORDS -->
   <div class="panel" id="panel-memory-show">
-    <div class="panel-header">
-      <div class="panel-title">Task 1 · Word Memorization</div>
-      <div class="step-counter">STEP 04 / 08</div>
-    </div>
+    <div class="panel-header"><div class="panel-title">Task 1 · Word Memorization</div><div class="step-counter">STEP 04 / 08</div></div>
     <div class="task-stage">
       <div id="memory-intro">
         <div class="instruction">You will see <strong>10 words for 20 seconds</strong>.</div>
-        <div class="sub-instruction" style="margin-bottom:24px">Memorize as many as you can. After completing the other tasks, you'll be asked to identify them from a list of 20 words. Get ready.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">Memorize them. You'll be tested at the end.</div>
         <button onclick="startMemoryShow()">Show Words</button>
       </div>
       <div id="memory-display" style="display:none">
@@ -311,51 +156,40 @@
       </div>
       <div id="memory-done" style="display:none">
         <div class="instruction">Time's up</div>
-        <div class="sub-instruction" style="margin-bottom:24px">You will be asked to recall these words at the end of the experiment.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">You'll recall these at the end.</div>
         <button onclick="goTo('count')">Continue to Task 2 →</button>
       </div>
     </div>
   </div>
 
-  <!-- COUNT TO 25 -->
   <div class="panel" id="panel-count">
-    <div class="panel-header">
-      <div class="panel-title">Task 2 · Internal Timing</div>
-      <div class="step-counter">STEP 05 / 08</div>
-    </div>
-    <div class="task-stage" id="count-stage">
+    <div class="panel-header"><div class="panel-title">Task 2 · Internal Timing</div><div class="step-counter">STEP 05 / 08</div></div>
+    <div class="task-stage">
       <div id="count-instructions">
         <div class="instruction">Count to <strong>25 seconds</strong> in your head.</div>
-        <div class="sub-instruction" style="margin-bottom:24px">When you press <strong>START</strong>, silently count "one Mississippi, two Mississippi..." until you reach 25, then press <strong>STOP</strong>. Do not look at any clocks.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">Press START, count silently, then press STOP at 25.</div>
         <button onclick="startCount()">Start Counting</button>
       </div>
       <div id="count-running" style="display:none">
         <div class="instruction">Counting in progress...</div>
         <div class="big-display">⏱</div>
-        <div class="sub-instruction" style="margin-bottom:24px">Press STOP when you reach 25 seconds in your head.</div>
         <button onclick="stopCount()">Stop</button>
       </div>
       <div id="count-result" style="display:none">
         <div class="instruction">Time recorded</div>
         <div class="big-display" id="count-time">--</div>
         <div class="sub-instruction" id="count-feedback"></div>
-        <div class="button-row" style="justify-content:center; margin-top:24px">
-          <button onclick="goTo('reaction')">Continue to Task 3 →</button>
-        </div>
+        <div class="button-row" style="justify-content:center; margin-top:24px"><button onclick="goTo('reaction')">Continue →</button></div>
       </div>
     </div>
   </div>
 
-  <!-- REACTION TIME -->
   <div class="panel" id="panel-reaction">
-    <div class="panel-header">
-      <div class="panel-title">Task 3 · Reaction Time</div>
-      <div class="step-counter">STEP 06 / 08</div>
-    </div>
+    <div class="panel-header"><div class="panel-title">Task 3 · Reaction Time</div><div class="step-counter">STEP 06 / 08</div></div>
     <div class="task-stage">
       <div id="rt-intro">
-        <div class="instruction">When the box turns <span style="color:var(--accent)"><strong>GREEN</strong></span>, click as fast as you can.</div>
-        <div class="sub-instruction" style="margin-bottom:24px">5 trials. Don't click while it's red — that's a false start. Your average reaction time will be calculated.</div>
+        <div class="instruction">Click when the box turns <span style="color:var(--accent)"><strong>GREEN</strong></span>.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">5 trials. Don't click during red.</div>
         <button onclick="startRT()">Begin Trials</button>
       </div>
       <div id="rt-active" style="display:none; width:100%">
@@ -367,23 +201,17 @@
         <div class="instruction">Reaction trials complete</div>
         <div class="big-display" id="rt-avg">--</div>
         <div class="sub-instruction" id="rt-detail"></div>
-        <div class="button-row" style="justify-content:center; margin-top:24px">
-          <button onclick="goTo('stroop')">Continue to Task 4 →</button>
-        </div>
+        <div class="button-row" style="justify-content:center; margin-top:24px"><button onclick="goTo('stroop')">Continue →</button></div>
       </div>
     </div>
   </div>
 
-  <!-- STROOP -->
   <div class="panel" id="panel-stroop">
-    <div class="panel-header">
-      <div class="panel-title">Task 4 · Stroop Test</div>
-      <div class="step-counter">STEP 07 / 08</div>
-    </div>
+    <div class="panel-header"><div class="panel-title">Task 4 · Stroop Test</div><div class="step-counter">STEP 07 / 08</div></div>
     <div class="task-stage">
       <div id="stroop-intro">
         <div class="instruction">Identify the <strong>color of the ink</strong>, NOT the word.</div>
-        <div class="sub-instruction" style="margin-bottom:24px">15 trials. Click the button matching the displayed color. Be both fast and accurate.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">15 trials. Be fast and accurate.</div>
         <button onclick="startStroop()">Begin Stroop Task</button>
       </div>
       <div id="stroop-active" style="display:none">
@@ -397,93 +225,63 @@
         </div>
       </div>
       <div id="stroop-done" style="display:none">
-        <div class="instruction">Stroop task complete</div>
+        <div class="instruction">Stroop complete</div>
         <div class="big-display" id="stroop-score">--</div>
         <div class="sub-instruction" id="stroop-detail"></div>
-        <div class="button-row" style="justify-content:center; margin-top:24px">
-          <button onclick="goTo('memory-recall')">Continue to Word Recall →</button>
-        </div>
+        <div class="button-row" style="justify-content:center; margin-top:24px"><button onclick="goTo('memory-recall')">Continue →</button></div>
       </div>
     </div>
   </div>
 
-  <!-- MEMORY: RECALL -->
   <div class="panel" id="panel-memory-recall">
-    <div class="panel-header">
-      <div class="panel-title">Task 5 · Word Recall</div>
-      <div class="step-counter">STEP 08 / 08</div>
-    </div>
+    <div class="panel-header"><div class="panel-title">Task 5 · Word Recall</div><div class="step-counter">STEP 08 / 08</div></div>
     <div class="task-stage">
       <div id="recall-intro">
-        <div class="instruction">Select the <strong>10 words</strong> you saw at the beginning.</div>
-        <div class="sub-instruction" style="margin-bottom:24px">From the 20 words below, click on the ones you remember from the memorization task.</div>
+        <div class="instruction">Select the <strong>10 words</strong> you saw earlier.</div>
+        <div class="sub-instruction" style="margin-bottom:24px">From the 20 below, pick the originals.</div>
         <button onclick="startRecall()">Begin Recall</button>
       </div>
       <div id="recall-active" style="display:none; width:100%">
         <div class="selection-counter">Selected: <strong id="recall-count">0</strong> / 10</div>
         <div class="word-choice-grid" id="recall-choices"></div>
-        <div class="button-row" style="justify-content:center; margin-top:24px">
-          <button id="recall-submit" onclick="submitRecall()" disabled>Submit Selection</button>
-        </div>
+        <div class="button-row" style="justify-content:center; margin-top:24px"><button id="recall-submit" onclick="submitRecall()" disabled>Submit Selection</button></div>
       </div>
       <div id="recall-done" style="display:none">
         <div class="instruction">Recall complete</div>
         <div class="big-display" id="recall-score">--</div>
         <div class="sub-instruction" id="recall-detail"></div>
-        <div class="button-row" style="justify-content:center; margin-top:24px">
-          <button onclick="finishExperiment()">View Results →</button>
-        </div>
+        <div class="button-row" style="justify-content:center; margin-top:24px"><button onclick="finishExperiment()">View Results →</button></div>
       </div>
     </div>
   </div>
 
-  <!-- RESULTS -->
   <div class="panel" id="panel-results">
-    <div class="panel-header">
-      <div class="panel-title">Your Cognitive Readiness</div>
-      <div class="step-counter">COMPLETE</div>
-    </div>
+    <div class="panel-header"><div class="panel-title">Your Cognitive Readiness</div><div class="step-counter">COMPLETE</div></div>
     <div class="score-card">
       <div class="score-label">Composite Score</div>
       <div class="score-value" id="composite-score">--</div>
       <div class="sub-instruction" id="composite-msg"></div>
     </div>
     <div class="score-grid">
-      <div class="score-item">
-        <div class="score-item-label">Memory</div>
-        <div class="score-item-value" id="r-memory">--</div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-label">Timing</div>
-        <div class="score-item-value" id="r-count">--</div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-label">Reaction</div>
-        <div class="score-item-value" id="r-rt">--</div>
-      </div>
-      <div class="score-item">
-        <div class="score-item-label">Stroop</div>
-        <div class="score-item-value" id="r-stroop">--</div>
-      </div>
+      <div class="score-item"><div class="score-item-label">Memory</div><div class="score-item-value" id="r-memory">--</div></div>
+      <div class="score-item"><div class="score-item-label">Timing</div><div class="score-item-value" id="r-count">--</div></div>
+      <div class="score-item"><div class="score-item-label">Reaction</div><div class="score-item-value" id="r-rt">--</div></div>
+      <div class="score-item"><div class="score-item-label">Stroop</div><div class="score-item-value" id="r-stroop">--</div></div>
     </div>
     <div id="upload-status"></div>
     <div class="button-row" style="justify-content:center; margin-top:24px">
-      <button class="secondary" onclick="downloadJSON()">Download Data (JSON)</button>
+      <button class="secondary" onclick="downloadJSON()">Download Data</button>
       <button onclick="uploadToSheet()">Submit to Study</button>
     </div>
-    <p style="text-align:center; margin-top:24px; font-size:12px;">Thank you for participating in Dartmouth's Cognitive Rhythm Study.</p>
+    <p style="text-align:center; margin-top:24px; font-size:12px;">Thank you for participating.</p>
   </div>
 
-  <footer>
-    Dartmouth College · PSYC Research · Single-session protocol
-  </footer>
+  <footer>Dartmouth College · PSYC Research</footer>
 </div>
 
 <script>
-// ============ GOOGLE SHEETS WEBHOOK ============
 const SHEETS_WEBHOOK = "https://script.google.com/macros/s/AKfycbw5BQ8aaiZ41gap2Wt7rCQ-oFgJ_KK4puM73_pg3QEo-LiMwcnlfhC_7ttPTbEpR6Ot/exec";
 
-// ============ STATE ============
 const data = {
   sleep: null, caffeine: null, time: null, day: null,
   adhd: null, experience: null, athlete: null, environment: null,
@@ -495,12 +293,10 @@ const data = {
 };
 
 const panels = ['intro','demographics','wentout','memory-show','count','reaction','stroop','memory-recall','results'];
-let current = 'intro';
 
 function goTo(panel) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + panel).classList.add('active');
-  current = panel;
   const idx = panels.indexOf(panel);
   document.getElementById('progressBar').style.width = ((idx / (panels.length - 1)) * 100) + '%';
   window.scrollTo({top: 0, behavior:'smooth'});
@@ -516,10 +312,7 @@ document.querySelectorAll('.radio-option input').forEach(r => {
 function validateDemographics() {
   const fields = ['f-sleep','f-caffeine','f-time','f-day','f-adhd','f-experience','f-athlete','f-environment'];
   for (const f of fields) {
-    if (!document.getElementById(f).value) {
-      alert('Please complete all fields.');
-      return;
-    }
+    if (!document.getElementById(f).value) { alert('Please complete all fields.'); return; }
   }
   data.sleep = parseFloat(document.getElementById('f-sleep').value);
   data.caffeine = parseInt(document.getElementById('f-caffeine').value);
@@ -540,32 +333,20 @@ function validateWentOut() {
   goTo('memory-show');
 }
 
-// ============ MEMORY TASK ============
-const WORD_POOL = [
-  'LANTERN','MEADOW','CIRCUIT','VELVET','HARBOR','TANGENT','GLACIER','MARBLE','CANYON','TRUMPET',
-  'ORCHARD','PRISM','SADDLE','VOLCANO','WHISTLE','FERRY','BEACON','COMPASS','THUNDER','OCTAVE',
-  'BRIDGE','CACTUS','DIAMOND','EMBER','FOSSIL','GARDEN','HORIZON','IGLOO','JOURNAL','KETTLE',
-  'LADDER','MAGNET','NEEDLE','OASIS','PEBBLE','QUARTZ','RIBBON','SHADOW','TIGER','UMBRELLA'
-];
+const WORD_POOL = ['LANTERN','MEADOW','CIRCUIT','VELVET','HARBOR','TANGENT','GLACIER','MARBLE','CANYON','TRUMPET','ORCHARD','PRISM','SADDLE','VOLCANO','WHISTLE','FERRY','BEACON','COMPASS','THUNDER','OCTAVE','BRIDGE','CACTUS','DIAMOND','EMBER','FOSSIL','GARDEN','HORIZON','IGLOO','JOURNAL','KETTLE','LADDER','MAGNET','NEEDLE','OASIS','PEBBLE','QUARTZ','RIBBON','SHADOW','TIGER','UMBRELLA'];
 
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
 
 function startMemoryShow() {
-  // Pick 10 target words and 10 distractors
   const shuffled = shuffle(WORD_POOL);
   data.memoryWords = shuffled.slice(0, 10);
   data.memoryDistractors = shuffled.slice(10, 20);
-  
   document.getElementById('memory-intro').style.display = 'none';
   document.getElementById('memory-display').style.display = 'block';
-  
   const grid = document.getElementById('memory-words');
   grid.innerHTML = '';
   data.memoryWords.forEach(w => {
@@ -574,7 +355,6 @@ function startMemoryShow() {
     div.textContent = w;
     grid.appendChild(div);
   });
-  
   let timeLeft = 20;
   document.getElementById('memory-timer').textContent = timeLeft;
   const interval = setInterval(() => {
@@ -591,8 +371,6 @@ function startMemoryShow() {
 function startRecall() {
   document.getElementById('recall-intro').style.display = 'none';
   document.getElementById('recall-active').style.display = 'block';
-  
-  // Shuffle 20 words (10 targets + 10 distractors)
   const allChoices = shuffle([...data.memoryWords, ...data.memoryDistractors]);
   const grid = document.getElementById('recall-choices');
   grid.innerHTML = '';
@@ -608,11 +386,8 @@ function startRecall() {
 
 function toggleRecall(el) {
   const selected = document.querySelectorAll('.word-choice.selected');
-  if (el.classList.contains('selected')) {
-    el.classList.remove('selected');
-  } else if (selected.length < 10) {
-    el.classList.add('selected');
-  }
+  if (el.classList.contains('selected')) { el.classList.remove('selected'); }
+  else if (selected.length < 10) { el.classList.add('selected'); }
   const count = document.querySelectorAll('.word-choice.selected').length;
   document.getElementById('recall-count').textContent = count;
   document.getElementById('recall-submit').disabled = (count !== 10);
@@ -621,21 +396,16 @@ function toggleRecall(el) {
 function submitRecall() {
   const selected = Array.from(document.querySelectorAll('.word-choice.selected')).map(el => el.dataset.word);
   data.memorySelected = selected;
-  
   let correct = 0;
-  selected.forEach(w => {
-    if (data.memoryWords.includes(w)) correct++;
-  });
+  selected.forEach(w => { if (data.memoryWords.includes(w)) correct++; });
   data.memoryCorrect = correct;
   data.memoryScore = (correct / 10) * 100;
-  
   document.getElementById('recall-active').style.display = 'none';
   document.getElementById('recall-done').style.display = 'block';
   document.getElementById('recall-score').textContent = correct + ' / 10';
-  document.getElementById('recall-detail').textContent = `${(data.memoryScore).toFixed(0)}% accuracy`;
+  document.getElementById('recall-detail').textContent = `${data.memoryScore.toFixed(0)}% accuracy`;
 }
 
-// ============ COUNT TO 25 ============
 let countStart = 0;
 function startCount() {
   document.getElementById('count-instructions').style.display = 'none';
@@ -649,19 +419,11 @@ function stopCount() {
   document.getElementById('count-result').style.display = 'block';
   document.getElementById('count-time').textContent = elapsed.toFixed(2) + 's';
   const diff = Math.abs(elapsed - 25);
-  let fb = '';
-  if (diff < 1.5) fb = 'Excellent internal timing.';
-  else if (diff < 4) fb = 'Solid internal timing.';
-  else if (diff < 7) fb = 'Moderate timing accuracy.';
-  else fb = 'Significant deviation from 25 seconds.';
-  document.getElementById('count-feedback').textContent = `Target: 25.00s · Difference: ${diff.toFixed(2)}s · ${fb}`;
+  let fb = diff < 1.5 ? 'Excellent timing.' : diff < 4 ? 'Solid timing.' : diff < 7 ? 'Moderate accuracy.' : 'Significant deviation.';
+  document.getElementById('count-feedback').textContent = `Target: 25.00s · Diff: ${diff.toFixed(2)}s · ${fb}`;
 }
 
-// ============ REACTION TIME ============
-let rtTrials = [];
-let rtState = 'idle';
-let rtStart = 0;
-let rtTimeout = null;
+let rtTrials = [], rtState = 'idle', rtStart = 0, rtTimeout = null;
 const RT_TOTAL = 5;
 
 function renderTracker() {
@@ -679,10 +441,8 @@ function renderTracker() {
 function startRT() {
   document.getElementById('rt-intro').style.display = 'none';
   document.getElementById('rt-active').style.display = 'block';
-  rtTrials = [];
-  rtState = 'idle';
-  renderTracker();
-  prepareRTTrial();
+  rtTrials = []; rtState = 'idle';
+  renderTracker(); prepareRTTrial();
 }
 
 function prepareRTTrial() {
@@ -710,7 +470,7 @@ function rtClick() {
     clearTimeout(rtTimeout);
     box.className = 'reaction-box too-soon';
     box.textContent = 'Too soon — wait for green';
-    document.getElementById('rt-status').textContent = 'False start. Trial will be retried.';
+    document.getElementById('rt-status').textContent = 'False start.';
     rtState = 'idle';
     setTimeout(prepareRTTrial, 1500);
   } else if (rtState === 'go') {
@@ -718,11 +478,8 @@ function rtClick() {
     rtTrials.push(reaction);
     document.getElementById('rt-status').textContent = `Trial ${rtTrials.length}: ${reaction.toFixed(0)}ms`;
     renderTracker();
-    if (rtTrials.length >= RT_TOTAL) {
-      finishRT();
-    } else {
-      setTimeout(prepareRTTrial, 1000);
-    }
+    if (rtTrials.length >= RT_TOTAL) finishRT();
+    else setTimeout(prepareRTTrial, 1000);
   }
 }
 
@@ -733,24 +490,18 @@ function finishRT() {
   document.getElementById('rt-active').style.display = 'none';
   document.getElementById('rt-done').style.display = 'block';
   document.getElementById('rt-avg').textContent = avg.toFixed(0) + 'ms';
-  const min = Math.min(...rtTrials).toFixed(0);
-  const max = Math.max(...rtTrials).toFixed(0);
-  document.getElementById('rt-detail').textContent = `Average of ${RT_TOTAL} trials · Best: ${min}ms · Worst: ${max}ms`;
+  document.getElementById('rt-detail').textContent = `Avg of ${RT_TOTAL} trials · Best: ${Math.min(...rtTrials).toFixed(0)}ms`;
 }
 
-// ============ STROOP ============
 const STROOP_TOTAL = 15;
 const COLORS = ['red','green','blue','yellow'];
 const COLOR_HEX = { red: '#ff5c7a', green: '#00d9a3', blue: '#5c9eff', yellow: '#ffcf4d' };
-let stroopTrials = [];
-let stroopIdx = 0;
-let stroopWord = '', stroopColor = '', stroopStart = 0;
+let stroopTrials = [], stroopIdx = 0, stroopWord = '', stroopColor = '', stroopStart = 0;
 
 function startStroop() {
   document.getElementById('stroop-intro').style.display = 'none';
   document.getElementById('stroop-active').style.display = 'block';
-  stroopTrials = [];
-  stroopIdx = 0;
+  stroopTrials = []; stroopIdx = 0;
   nextStroop();
 }
 
@@ -760,12 +511,9 @@ function nextStroop() {
   const incongruent = Math.random() < 0.7;
   stroopColor = COLORS[Math.floor(Math.random() * COLORS.length)];
   if (incongruent) {
-    let w;
-    do { w = COLORS[Math.floor(Math.random() * COLORS.length)]; } while (w === stroopColor);
+    let w; do { w = COLORS[Math.floor(Math.random() * COLORS.length)]; } while (w === stroopColor);
     stroopWord = w;
-  } else {
-    stroopWord = stroopColor;
-  }
+  } else { stroopWord = stroopColor; }
   const el = document.getElementById('stroop-word');
   el.textContent = stroopWord.toUpperCase();
   el.style.color = COLOR_HEX[stroopColor];
@@ -774,8 +522,7 @@ function nextStroop() {
 
 function stroopAnswer(answer) {
   const rt = performance.now() - stroopStart;
-  const correct = (answer === stroopColor);
-  stroopTrials.push({ correct, rt, congruent: stroopWord === stroopColor });
+  stroopTrials.push({ correct: answer === stroopColor, rt: rt, congruent: stroopWord === stroopColor });
   stroopIdx++;
   nextStroop();
 }
@@ -784,9 +531,7 @@ function finishStroop() {
   const correct = stroopTrials.filter(t => t.correct).length;
   const accuracy = correct / STROOP_TOTAL;
   const correctTrials = stroopTrials.filter(t => t.correct);
-  const avgRT = correctTrials.length > 0
-    ? correctTrials.reduce((a,b) => a + b.rt, 0) / correctTrials.length
-    : 0;
+  const avgRT = correctTrials.length > 0 ? correctTrials.reduce((a,b) => a + b.rt, 0) / correctTrials.length : 0;
   const score = accuracy * (1500 / Math.max(avgRT, 300)) * 100;
   data.stroopAccuracy = accuracy;
   data.stroopAvgRT = avgRT;
@@ -794,37 +539,25 @@ function finishStroop() {
   document.getElementById('stroop-active').style.display = 'none';
   document.getElementById('stroop-done').style.display = 'block';
   document.getElementById('stroop-score').textContent = score.toFixed(0);
-  document.getElementById('stroop-detail').textContent =
-    `Accuracy: ${(accuracy*100).toFixed(0)}% · Avg RT: ${avgRT.toFixed(0)}ms`;
+  document.getElementById('stroop-detail').textContent = `Accuracy: ${(accuracy*100).toFixed(0)}% · Avg RT: ${avgRT.toFixed(0)}ms`;
 }
 
-// ============ COMPOSITE & RESULTS ============
 function finishExperiment() {
   const timingDiff = Math.abs(data.countTime - 25);
   const timingScore = Math.max(0, 100 - (timingDiff * 8));
   const rtScore = Math.max(0, Math.min(100, 100 - ((data.reactionAvg - 200) / 4)));
   const stroopNorm = Math.max(0, Math.min(100, data.stroopScore));
   const memoryNorm = data.memoryScore;
-  
-  // Weighted: memory 25%, timing 15%, reaction 25%, stroop 35%
   const composite = (memoryNorm * 0.25) + (timingScore * 0.15) + (rtScore * 0.25) + (stroopNorm * 0.35);
   data.composite = composite;
   data.timestamp = new Date().toISOString();
-  
   document.getElementById('composite-score').textContent = composite.toFixed(1);
   document.getElementById('r-memory').textContent = data.memoryCorrect + '/10';
   document.getElementById('r-count').textContent = data.countTime.toFixed(2) + 's';
   document.getElementById('r-rt').textContent = data.reactionAvg.toFixed(0) + 'ms';
   document.getElementById('r-stroop').textContent = data.stroopScore.toFixed(0);
-  
-  let msg = '';
-  if (composite >= 80) msg = 'Peak cognitive readiness';
-  else if (composite >= 65) msg = 'Above-average performance';
-  else if (composite >= 50) msg = 'Average cognitive readiness';
-  else if (composite >= 35) msg = 'Below-average — possible fatigue';
-  else msg = 'Low cognitive readiness — consider rest';
+  let msg = composite >= 80 ? 'Peak cognitive readiness' : composite >= 65 ? 'Above-average' : composite >= 50 ? 'Average' : composite >= 35 ? 'Below-average' : 'Low readiness';
   document.getElementById('composite-msg').textContent = msg;
-  
   goTo('results');
 }
 
@@ -833,7 +566,7 @@ function downloadJSON() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `cognitive_rhythm_${Date.now()}.json`;
+  a.download = `cognitive_${Date.now()}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -841,10 +574,10 @@ function downloadJSON() {
 async function uploadToSheet() {
   const status = document.getElementById('upload-status');
   status.innerHTML = '<div class="status-msg">Uploading...</div>';
+  console.log("Submitting:", JSON.stringify(data, null, 2));
   try {
     await fetch(SHEETS_WEBHOOK, {
-      method: 'POST',
-      mode: 'no-cors',
+      method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
     });
